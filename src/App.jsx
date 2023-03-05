@@ -1,40 +1,27 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import { invoke } from "@tauri-apps/api/tauri";
-import { useDrop } from "react-dnd";
 import "./App.css";
-import { NativeTypes } from "react-dnd-html5-backend";
-import { event } from "@tauri-apps/api";
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
   const [name, setName] = useState("");
-  const [selectedFile, setSelectedFile] = useState();
-  const [isFilePicked, setIsFilePicked] = useState(false);
+  const [ocrText, setOcrText] =useState();
 
   async function greet() {
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
     setGreetMsg(await invoke("greet", { name }));
   }
 
+  async function tauri_ocr() {
+    console.log("tauri_ocr_button_pushed");
+    await invoke("tauri_ocr");
+  }
+
   return (
     <div className="container">
-      <h1>Welcome to Tauri!</h1>
-
-      <div className="row">
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://tauri.app" target="_blank">
-          <img src="/tauri.svg" className="logo tauri" alt="Tauri logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-
-      <p>Click on the Tauri, Vite, and React logos to learn more.</p>
-
+      <h1>Welcome to Tauri_OCR!</h1>
+      {/*
       <div className="row">
         <form
           onSubmit={(e) => {
@@ -51,22 +38,15 @@ function App() {
         </form>
       </div>
       <p>{greetMsg}</p>
+      */}
       <div className="row">
         <form
           onSubmit={(e) => {
             e.preventDefault();
-
+            tauri_ocr();
           }}
         >
-          <input
-            id="file-input"
-            type="file"
-            onChange={(e) => {
-              setSelectedFile(e.target.files[0]);
-              setIsFilePicked(true);
-            }}
-          />
-          {isFilePicked ? <button type="submit">Read Character</button> : <a></a> }
+             <button type="submit">Select file to OCR</button> 
         </form>
       </div>
     </div>
