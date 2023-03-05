@@ -1,11 +1,16 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import { invoke } from "@tauri-apps/api/tauri";
+import { useDrop } from "react-dnd";
 import "./App.css";
+import { NativeTypes } from "react-dnd-html5-backend";
+import { event } from "@tauri-apps/api";
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
   const [name, setName] = useState("");
+  const [selectedFile, setSelectedFile] = useState();
+  const [isFilePicked, setIsFilePicked] = useState(false);
 
   async function greet() {
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
@@ -45,8 +50,25 @@ function App() {
           <button type="submit">Greet</button>
         </form>
       </div>
-
       <p>{greetMsg}</p>
+      <div className="row">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+
+          }}
+        >
+          <input
+            id="file-input"
+            type="file"
+            onChange={(e) => {
+              setSelectedFile(e.target.files[0]);
+              setIsFilePicked(true);
+            }}
+          />
+          {isFilePicked ? <button type="submit">Read Character</button> : <a></a> }
+        </form>
+      </div>
     </div>
   );
 }

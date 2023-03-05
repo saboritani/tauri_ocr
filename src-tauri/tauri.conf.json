@@ -16,6 +16,19 @@
       "shell": {
         "all": false,
         "open": true
+      },
+      "fs": {
+        "all": true,
+        "copyFile": false,
+        "createDir": false,
+        "exists": false,
+        "readDir": false,
+        "readFile": false,
+        "removeDir": false,
+        "removeFile": false,
+        "renameFile": false,
+        "scope": [],
+        "writeFile": false
       }
     },
     "bundle": {
@@ -27,7 +40,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.tauri-ocr.dev",
       "targets": "all"
     },
     "security": {
